@@ -1,0 +1,54 @@
+<div class="login">
+  <app-loader *ngIf="showSpinner"></app-loader>
+  <div class="login__block toggled">
+    <div class="login__block__header palette-Blue bg">
+      <i class="zmdi zmdi-account-circle"></i> Create an account
+      <div class="actions login__block__actions">
+        <div class="dropdown" [ngClass]="{'open':showOption}">
+          <a routerLink="/signup" (click)="toggleOption()"><i #signuppopup class="zmdi zmdi-more-vert"></i></a>
+          <ul class="dropdown-menu pull-right">
+            <li><a routerLink="" href="">Already have an account?</a></li>
+            <li><a data-block="#l-forget-password" href="">Forgot password?</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="login__block__body">
+      <form novalidate [formGroup]="signupForm" (ngSubmit)="doSignup(signupForm)">
+
+        <div class="form-group form-group--float form-group--centered" [ngClass]="{'form-group--active': signupForm.controls['Email'].value!==''}">
+          <input type="email" class="form-control" formControlName="Email">
+          <label>Email Address</label>
+          <i class="form-group__bar"></i>
+        </div>
+        <span *ngIf="!signupForm.controls['Email'].valid && signupForm.controls['Email'].dirty" class="help-block" style="color: #c35249">Email is required</span>
+
+        <div class="form-group form-group--float form-group--centered" [ngClass]="{'form-group--active': signupForm.controls['Password'].value!==''}">
+          <input type="password" class="form-control" formControlName="Password">
+          <label>Password</label>
+          <i class="form-group__bar"></i>
+        </div>
+        <span *ngIf="!signupForm.controls['Password'].valid && signupForm.controls['Password'].dirty" class="help-block" style="color: #c35249">Password is required</span>
+
+        <div class="form-group form-group--float form-group--centered" [ngClass]="{'form-group--active': signupForm.controls['CPassword'].value!==''}">
+          <input type="password" class="form-control" formControlName="CPassword">
+          <label>Confirm Password</label>
+          <i class="form-group__bar"></i>
+        </div>
+        <span *ngIf="!signupForm.controls['CPassword'].valid && signupForm.controls['CPassword'].dirty" class="help-block" style="color: #c35249">Password is required</span>
+        <span *ngIf="(signupForm.controls['CPassword'].value !== signupForm.controls['Password'].value) && signupForm.controls['CPassword'].dirty"
+          class="help-block" style="color: #c35249">Password Mismatch</span>
+        <div class="input-centered">
+          <div class="checkbox">
+            <label>
+             <input type="checkbox" formControlName="Terms">
+             <i class="input-helper"></i>
+             Accept the license agreement</label>
+          </div>
+        </div>
+
+        <button [disabled]="!signupForm.valid" type="submit" class="btn btn--light btn--icon m-t-15"><i class="zmdi zmdi-plus"></i></button>
+      </form>
+    </div>
+  </div>
+</div>
